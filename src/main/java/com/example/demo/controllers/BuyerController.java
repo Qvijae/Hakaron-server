@@ -37,11 +37,9 @@ public class BuyerController {
             return "This Buyer Already Exist";
         }
     }
-    @GetMapping(value = "/getAllRequestsByLoginAndPassword")
-    public RequestsDto getAllRequestsByLoginAndPassword(@RequestBody LoginRequestDto loginRequestDto){
-        Buyer foundBuyer=buyers.findByLoginAndPassword(loginRequestDto.login,loginRequestDto.password);
-        ArrayList<Request> allByBuyerId = requests.findAllByBuyerId(foundBuyer.id);
-        return new RequestsDto(allByBuyerId);
+    @GetMapping(value = "/getAllRequests")
+    public RequestsDto getAllRequests(@RequestBody LoginRequestDto loginRequestDto){
+        return new RequestsDto((ArrayList<Request>) requests.findAll());
     }
     @PostMapping(value = "/createNewRequest")
     public String createNewRequest(@RequestBody Request request) {

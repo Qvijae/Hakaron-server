@@ -30,21 +30,22 @@ public class SellerController {
 
     @GetMapping(value = "/logInByLoginAndPassword")
     public Seller logInByLoginAndPassword(@RequestBody LoginRequestDto loginRequestDto) {
-        return sellers.findByLoginAndPassword(loginRequestDto.login,loginRequestDto.password);
+        return sellers.findByLoginAndPassword(loginRequestDto.login, loginRequestDto.password);
     }
+
     @PostMapping(value = "/signUp")
     public String signUpByLoginAndPassword(@RequestBody Seller seller) {
-        Seller foundSeller=sellers.findByLoginAndPassword(seller.login,seller.password);
-        if (foundSeller==null){
+        Seller foundSeller = sellers.findByLoginAndPassword(seller.login, seller.password);
+        if (foundSeller == null) {
             sellers.saveAndFlush(seller);
             return "OK";
-        }
-        else {
+        } else {
             return "This Seller Already Exist";
         }
     }
+
     @GetMapping(value = "/getAllRequests")
-    public RequestsDto getAllRequests(){
+    public RequestsDto getAllRequests() {
         return new RequestsDto((ArrayList<Request>) requests.findAll());
     }
 
@@ -52,6 +53,11 @@ public class SellerController {
     public String createNewRequest(@RequestBody Response response) {
         responses.saveAndFlush(response);
         return "OK";
+    }
+
+    @GetMapping(value = "/getAllResponses")
+    public ResponsesDto getAllResponses() {
+        return new ResponsesDto((ArrayList<Response>) responses.findAll());
     }
 
 }

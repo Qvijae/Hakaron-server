@@ -11,7 +11,7 @@ public class Request {
     @Column
     public String productName;
     @Column
-    public String essense;
+    public String essence;
     @Column
     public int totalPrice;
     @Column
