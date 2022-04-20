@@ -2,11 +2,13 @@ package com.example.demo.controllers;
 
 import com.example.demo.dtos.LoginRequestDto;
 import com.example.demo.dtos.RequestsDto;
+import com.example.demo.dtos.*;
 import com.example.demo.dtos.ResponsesDto;
 import com.example.demo.models.Buyer;
 import com.example.demo.models.Request;
 import com.example.demo.models.Response;
 import com.example.demo.models.Seller;
+import com.example.demo.repositories.BuyersRepository;
 import com.example.demo.repositories.RequestsRepository;
 import com.example.demo.repositories.ResponsesRepository;
 import com.example.demo.repositories.SellersRepository;
@@ -27,7 +29,8 @@ public class SellerController {
     RequestsRepository requests;
     @Autowired
     ResponsesRepository responses;
-
+    @Autowired
+    BuyersRepository buyers;
 
     @GetMapping(value = "/logInByLoginAndPassword")
     public Seller logInByLoginAndPassword(@RequestBody LoginRequestDto loginRequestDto) {
@@ -44,14 +47,14 @@ public class SellerController {
             return "This Seller Already Exist";
         }
     }
+
     @PostMapping(value = "/editSeller")
     public String editSeller(@RequestBody Seller seller) {
-        Seller foundSeller=sellers.findByLoginAndPassword(seller.login,seller.password);
-        if (foundSeller!=null){
+        Seller foundSeller = sellers.findByLoginAndPassword(seller.login, seller.password);
+        if (foundSeller != null) {
             sellers.saveAndFlush(seller);
             return "OK";
-        }
-        else {
+        } else {
             return "This Seller does not Exist";
         }
     }
@@ -66,11 +69,13 @@ public class SellerController {
         responses.saveAndFlush(response);
         return "OK";
     }
+
     @PutMapping(value = "/updateResponse")
     public String updateResponse(@RequestBody Response response) {
         responses.saveAndFlush(response);
         return "OK";
     }
+
     @DeleteMapping(value = "/deleteResponse")
     public String deleteResponse(@RequestBody Response response) {
         responses.delete(response);
@@ -82,4 +87,8 @@ public class SellerController {
         return new ResponsesDto((ArrayList<Response>) responses.findAll());
     }
 
+    @GetMapping("/getAllBuyers")
+    public BuyersDto getAllBuyers() {
+        return new BuyersDto((ArrayList<Buyer>)buyers.findAll());
+    }
 }
