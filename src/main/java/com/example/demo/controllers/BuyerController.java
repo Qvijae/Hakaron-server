@@ -37,8 +37,19 @@ public class BuyerController {
             return "This Buyer Already Exist";
         }
     }
+    @PostMapping(value = "/editBuyer")
+    public String editBuyer(@RequestBody Buyer buyer) {
+        Buyer foundBuyer=buyers.findByLoginAndPassword(buyer.login,buyer.password);
+        if (foundBuyer!=null){
+            buyers.saveAndFlush(buyer);
+            return "OK";
+        }
+        else {
+            return "This Buyer does not Exist";
+        }
+    }
     @GetMapping(value = "/getAllRequests")
-    public RequestsDto getAllRequests(@RequestBody LoginRequestDto loginRequestDto){
+    public RequestsDto getAllRequests(){
         return new RequestsDto((ArrayList<Request>) requests.findAll());
     }
     @PostMapping(value = "/createNewRequest")
@@ -46,6 +57,17 @@ public class BuyerController {
         requests.saveAndFlush(request);
         return "OK";
     }
+    @PostMapping(value = "/updateRequest")
+    public String updateRequest(@RequestBody Request request) {
+        requests.saveAndFlush(request);
+        return "OK";
+    }
+    @DeleteMapping(value = "/deleteRequest")
+    public String deleteRequest(@RequestBody Request request) {
+        requests.delete(request);
+        return "OK";
+    }
+
 
 
 

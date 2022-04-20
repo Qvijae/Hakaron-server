@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dtos.LoginRequestDto;
 import com.example.demo.dtos.RequestsDto;
 import com.example.demo.dtos.ResponsesDto;
+import com.example.demo.models.Buyer;
 import com.example.demo.models.Request;
 import com.example.demo.models.Response;
 import com.example.demo.models.Seller;
@@ -43,6 +44,17 @@ public class SellerController {
             return "This Seller Already Exist";
         }
     }
+    @PostMapping(value = "/editSeller")
+    public String editSeller(@RequestBody Seller seller) {
+        Seller foundSeller=sellers.findByLoginAndPassword(seller.login,seller.password);
+        if (foundSeller!=null){
+            sellers.saveAndFlush(seller);
+            return "OK";
+        }
+        else {
+            return "This Seller does not Exist";
+        }
+    }
 
     @GetMapping(value = "/getAllRequests")
     public RequestsDto getAllRequests() {
@@ -50,8 +62,18 @@ public class SellerController {
     }
 
     @PostMapping(value = "/createNewResponse")
-    public String createNewRequest(@RequestBody Response response) {
+    public String createNewResponse(@RequestBody Response response) {
         responses.saveAndFlush(response);
+        return "OK";
+    }
+    @PostMapping(value = "/updateResponse")
+    public String updateResponse(@RequestBody Response response) {
+        responses.saveAndFlush(response);
+        return "OK";
+    }
+    @DeleteMapping(value = "/deleteResponse")
+    public String deleteResponse(@RequestBody Response response) {
+        responses.delete(response);
         return "OK";
     }
 
