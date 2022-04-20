@@ -66,7 +66,7 @@ public class SellerController {
         responses.saveAndFlush(response);
         return "OK";
     }
-    @PostMapping(value = "/updateResponse")
+    @PutMapping(value = "/updateResponse")
     public String updateResponse(@RequestBody Response response) {
         responses.saveAndFlush(response);
         return "OK";

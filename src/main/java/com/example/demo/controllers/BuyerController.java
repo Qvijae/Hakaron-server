@@ -37,7 +37,7 @@ public class BuyerController {
             return "This Buyer Already Exist";
         }
     }
-    @PostMapping(value = "/editBuyer")
+    @PutMapping(value = "/editBuyer")
     public String editBuyer(@RequestBody Buyer buyer) {
         Buyer foundBuyer=buyers.findByLoginAndPassword(buyer.login,buyer.password);
         if (foundBuyer!=null){
@@ -57,7 +57,7 @@ public class BuyerController {
         requests.saveAndFlush(request);
         return "OK";
     }
-    @PostMapping(value = "/updateRequest")
+    @PutMapping(value = "/updateRequest")
     public String updateRequest(@RequestBody Request request) {
         requests.saveAndFlush(request);
         return "OK";
